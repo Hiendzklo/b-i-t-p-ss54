@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer with Promise</title>
+</head>
+<body>
+    <script>
+        /**
+         * Hàm countDown thực hiện đếm ngược từ n giây và trả về một Promise
+         */
+        function countDown(n) {
+            return new Promise((resolve, reject) => {
+                if (typeof n !== 'number' || n < 0) {
+                    reject("Tham số không hợp lệ. Vui lòng nhập một số nguyên dương.");
+                    return;
+                }
+
+                let currentCount = n;
+                const intervalId = setInterval(() => {
+                    console.log(currentCount);
+                    currentCount--;
+
+                    if (currentCount < 0) {
+                        clearInterval(intervalId);
+                        console.log("Hoàn thành quá trình đếm");
+                        resolve();
+                    }
+                }, 1000);
+            });
+        }
+
+        // Triển khai hàm countDown và xử lý Promise trả về
+        countDown(5)
+            .then(() => {
+                console.log("Quá trình đếm ngược đã hoàn tất.");
+            })
+            .catch((error) => {
+                console.error("Lỗi:", error);
+            });
+
+    </script>
+</body>
+</html>

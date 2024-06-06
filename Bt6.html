@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Number Check with Async-Await</title>
+</head>
+<body>
+    <script>
+        /**
+         * Kiểm tra số nguyên tố sử dụng Promise
+         */
+        function isPrimeWithPromise(number) {
+            return new Promise((resolve, reject) => {
+                if (typeof number !== 'number' || !Number.isInteger(number) || number < 2) {
+                    return resolve(false);
+                }
+                
+                for (let i = 2; i <= Math.sqrt(number); i++) {
+                    if (number % i === 0) {
+                        return resolve(false);
+                    }
+                }
+                
+                return resolve(true);
+            });
+        }
+
+        /**
+         * Kiểm tra số nguyên tố sử dụng async - await
+         */
+        async function isPrimeWithAsyncAwait(number) {
+            try {
+                const result = await isPrimeWithPromise(number);
+                return result;
+            } catch (error) {
+                console.error(`Lỗi: ${error.message}`);
+                return false;
+            }
+        }
+
+        // Triển khai hàm và in kết quả ra màn hình console
+        (async () => {
+            console.log(await isPrimeWithAsyncAwait(2)); // true
+            console.log(await isPrimeWithAsyncAwait(3)); // true
+            console.log(await isPrimeWithAsyncAwait(4)); // false
+
+            // Test các trường hợp lỗi
+            console.log(await isPrimeWithAsyncAwait(-1)); // false
+            console.log(await isPrimeWithAsyncAwait(1.5)); // false
+            console.log(await isPrimeWithAsyncAwait('5')); // false
+        })();
+    </script>
+</body>
+</html>

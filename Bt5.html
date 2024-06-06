@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Number Check with Promise</title>
+</head>
+<body>
+    <script>
+        /**
+         * Kiểm tra số nguyên tố sử dụng Promise
+         */
+        function isPrimeWithPromise(number) {
+            return new Promise((resolve, reject) => {
+                if (typeof number !== 'number' || !Number.isInteger(number) || number < 2) {
+                    reject(false);
+                } else {
+                    let isPrime = true;
+                    for (let i = 2; i <= Math.sqrt(number); i++) {
+                        if (number % i === 0) {
+                            isPrime = false;
+                            break;
+                        }
+                    }
+                    resolve(isPrime);
+                }
+            });
+        }
+
+        // Triển khai hàm và in kết quả ra màn hình console
+        isPrimeWithPromise(2).then(result => console.log(result)).catch(error => console.log(error)); // true
+        isPrimeWithPromise(3).then(result => console.log(result)).catch(error => console.log(error)); // true
+        isPrimeWithPromise(4).then(result => console.log(result)).catch(error => console.log(error)); // false
+
+        // Test trường hợp lỗi
+        isPrimeWithPromise(-1).then(result => console.log(result)).catch(error => console.log(error)); // false
+        isPrimeWithPromise(1.5).then(result => console.log(result)).catch(error => console.log(error)); // false
+        isPrimeWithPromise('5').then(result => console.log(result)).catch(error => console.log(error)); // false
+    </script>
+</body>
+</html>

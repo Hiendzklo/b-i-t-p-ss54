@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sum Array with Async-Await</title>
+</head>
+<body>
+    <script>
+        /**
+         * Tính tổng của một mảng số nguyên sử dụng Promise
+         * @param {number[]} numbers - Mảng các số nguyên
+         * @returns {Promise<number>} - Promise trả về tổng của mảng
+         */
+        function sumWithPromise(numbers) {
+            return new Promise((resolve, reject) => {
+                // Kiểm tra xem tất cả các phần tử trong mảng có phải là số không
+                if (!Array.isArray(numbers) || !numbers.every(Number.isInteger)) {
+                    return reject(new Error("Mảng phải chứa các số nguyên"));
+                }
+
+                // Tính tổng của mảng
+                const sum = numbers.reduce((acc, current) => acc + current, 0);
+                resolve(sum);
+            });
+        }
+
+        /**
+         * Tính tổng của một mảng số nguyên sử dụng async - await
+         */
+        async function sumWithAsyncAwait(numbers) {
+            try {
+                const sum = await sumWithPromise(numbers);
+                return sum;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        }
+
+        (async () => {
+            try {
+                const result = await sumWithAsyncAwait([1, 2, 3, 4, 5, 6, 7]);
+                console.log(`Tổng của mảng là: ${result}`); // Kết quả: 28
+            } catch (error) {
+                console.error(`Lỗi: ${error.message}`);
+            }
+
+            // Test trường hợp lỗi
+            try {
+                const result = await sumWithAsyncAwait([1, 2, '3', 4]);
+                console.log(`Tổng của mảng là: ${result}`);
+            } catch (error) {
+                console.error(`Lỗi: ${error.message}`); // Kết quả: Lỗi: Mảng phải chứa các số nguyên
+            }
+        })();
+    </script>
+</body>
+</html>

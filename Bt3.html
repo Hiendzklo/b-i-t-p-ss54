@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sum Array with Promise</title>
+</head>
+<body>
+    <script>
+        /**
+         * Tính tổng của một mảng số nguyên sử dụng Promise
+         */
+        function sumWithPromise(numbers) {
+            return new Promise((resolve, reject) => {
+                if (!Array.isArray(numbers) || !numbers.every(Number.isInteger)) {
+                    return reject(new Error("Mảng phải chứa các số nguyên"));
+                }
+
+                const sum = numbers.reduce((acc, current) => acc + current, 0);
+                resolve(sum);
+            });
+        }
+
+        sumWithPromise([1, 2, 3, 4, 5, 6, 7])
+            .then(sum => {
+                console.log(`Tổng của mảng là: ${sum}`); // Kết quả: 28
+            })
+            .catch(error => {
+                console.error(`Lỗi: ${error.message}`);
+            });
+
+        // Test trường hợp lỗi
+        sumWithPromise([1, 2, '3', 4])
+            .then(sum => {
+                console.log(`Tổng của mảng là: ${sum}`);
+            })
+            .catch(error => {
+                console.error(`Lỗi: ${error.message}`); // Kết quả: Lỗi: Mảng phải chứa các số nguyên
+            });
+    </script>
+</body>
+</html>
